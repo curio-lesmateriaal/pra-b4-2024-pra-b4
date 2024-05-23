@@ -11,5 +11,17 @@ namespace PRA_B4_FOTOKIOSK.models
 
         public string Name { get; set; }
 
+        public float Price { get; set; }     
     }
 }
+
+/*
+ * Als klant wil ik een prijslijst hebben, en een dropdown in het formulier. Met kloppende prijzen en beschrijvingen
+
+o Bewerk de KioskProduct Class. Zodat deze een prijs en beschrijving heeft.
+o Loop door middel van een foreach loop door de lijst met producten. En voeg deze toe
+aan de prijslijst.
+ foreach (KioskProduct product in ShopManager.Products)
+ ShopManager.SetShopPriceList(“string”);
+ ShopManager.AddShopPriceList(“string”);
+ ShopManager.GetShopPriceList(“string”);*/
