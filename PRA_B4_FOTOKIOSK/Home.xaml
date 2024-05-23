@@ -33,7 +33,7 @@
                     <Button x:Name="btnSave" Content="Bon Opslaan" HorizontalAlignment="Left" Margin="10,998,0,0" VerticalAlignment="Top" Width="83" Height="28" Click="btnSave_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Zoeken">
+            <TabItem Header="Zoeken" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="55">
                 <Grid>
                     <Label Content="Zoeken:" HorizontalAlignment="Left" Margin="100,53,0,0" VerticalAlignment="Top" Height="24" Width="255"/>
                     <TextBox x:Name="tbZoeken" HorizontalAlignment="Left" Margin="100,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="325" Height="22"/>
