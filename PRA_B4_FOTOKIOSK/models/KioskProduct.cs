@@ -11,7 +11,11 @@ namespace PRA_B4_FOTOKIOSK.models
 
         public string Name { get; set; }
 
-        public float Price { get; set; }     
+        public float Price { get; set; } 
+        
+        public string Description { get; set; }
+
+        public KioskProduct() { }
     }
 }
 
