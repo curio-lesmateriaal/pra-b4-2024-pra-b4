@@ -14,8 +14,6 @@ namespace PRA_B4_FOTOKIOSK.models
         public float Price { get; set; } 
         
         public string Description { get; set; }
-
-        public KioskProduct() { }
     }
 }
 

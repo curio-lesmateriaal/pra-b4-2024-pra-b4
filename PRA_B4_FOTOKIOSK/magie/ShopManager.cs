@@ -17,6 +17,10 @@ namespace PRA_B4_FOTOKIOSK.magie
         public static List<KioskProduct> Products = new List<KioskProduct>();    
         public static Home Instance { get; set; }
 
+        public static string GetShopPriceList(string text)
+        {
+            return (string)Instance.lbReceipt.Content;
+        }
         public static void SetShopPriceList(string text)
         {
             Instance.lbPrices.Content = text;
