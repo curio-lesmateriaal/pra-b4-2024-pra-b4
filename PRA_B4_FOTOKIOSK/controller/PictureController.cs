@@ -1,4 +1,4 @@
-﻿using PRA_B4_FOTOKIOSK.magie;
+using PRA_B4_FOTOKIOSK.magie;
 using PRA_B4_FOTOKIOSK.models;
 using System;
 using System.Collections.Generic;
@@ -14,10 +14,8 @@ namespace PRA_B4_FOTOKIOSK.controller
         // De window die we laten zien op het scherm
         public static Home Window { get; set; }
 
-
         // De lijst met fotos die we laten zien
         public List<KioskPhoto> PicturesToDisplay = new List<KioskPhoto>();
-
 
         // Start methode die wordt aangeroepen wanneer de foto pagina opent.
         public void Start()
@@ -26,6 +24,9 @@ namespace PRA_B4_FOTOKIOSK.controller
             var now = DateTime.Now;
 
             int day = (int)now.DayOfWeek;
+
+            var lowerBound = now.AddMinutes(-30); // 30 minuten geleden
+            var upperBound = now.AddMinutes(-2); // 2 minuten geleden
 
             // Initializeer de lijst met fotos
             // WAARSCHUWING. ZONDER FILTER LAADT DIT ALLES!
@@ -49,7 +50,22 @@ namespace PRA_B4_FOTOKIOSK.controller
                                  * file string is de file van de foto. Bijvoorbeeld:
                                  * \fotos\0_Zondag\10_05_30_id8824.jpg
                                  */
-                                PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
+                                var fileName = Path.GetFileNameWithoutExtension(file);
+                                var parts = fileName.Split('_');
+
+                                // Controleer of de file naam het juiste formaat heeft
+                                if (parts.Length >= 4 && int.TryParse(parts[1], out int hour) &&
+                                    int.TryParse(parts[2], out int minute) && int.TryParse(parts[3], out int second))
+                                {
+                                    // Maak een DateTime object van de file tijd
+                                    DateTime fileTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, second);
+
+                                    // Controleer of de file tijd binnen de grenswaarden ligt
+                                    if (fileTime >= lowerBound && fileTime <= upperBound)
+                                    {
+                                        PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
+                                    }
+                                }
                             }
                         }
                     }
@@ -63,8 +79,7 @@ namespace PRA_B4_FOTOKIOSK.controller
         // Wordt uitgevoerd wanneer er op de Refresh knop is geklikt
         public void RefreshButtonClick()
         {
-
+            
         }
-
     }
 }
