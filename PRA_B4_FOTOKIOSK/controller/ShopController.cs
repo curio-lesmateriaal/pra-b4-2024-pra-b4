@@ -31,9 +31,9 @@ namespace PRA_B4_FOTOKIOSK.controller
             // Update dropdown met producten
             ShopManager.UpdateDropDownProducts();
                 foreach (KioskProduct product in ShopManager.Products)
-                {
-                    
-                }
+            {
+                ShopManager.AddShopPriceList(product.Name+" : "+product.Price+"\n");
+            }
         }
 
         // Wordt uitgevoerd wanneer er op de Toevoegen knop is geklikt
