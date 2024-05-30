@@ -53,19 +53,22 @@ namespace PRA_B4_FOTOKIOSK.controller
                                 var fileName = Path.GetFileNameWithoutExtension(file);
                                 var parts = fileName.Split('_');
 
+
+                                // Controleer of de file tijd binnen de grenswaarden ligt
+                                PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
+                                
+                                /*
+                                 * Mert dit werk niet man
+                                 * 
                                 // Controleer of de file naam het juiste formaat heeft
+                                // Maak een DateTime object van de file tijd
+                                DateTime fileTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, second);
                                 if (parts.Length >= 4 && int.TryParse(parts[1], out int hour) &&
                                     int.TryParse(parts[2], out int minute) && int.TryParse(parts[3], out int second))
                                 {
-                                    // Maak een DateTime object van de file tijd
-                                    DateTime fileTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, second);
 
-                                    // Controleer of de file tijd binnen de grenswaarden ligt
-                                    if (fileTime >= lowerBound && fileTime <= upperBound)
-                                    {
-                                        PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
-                                    }
                                 }
+                                */
                             }
                         }
                     }
@@ -79,7 +82,7 @@ namespace PRA_B4_FOTOKIOSK.controller
         // Wordt uitgevoerd wanneer er op de Refresh knop is geklikt
         public void RefreshButtonClick()
         {
-            
+
         }
     }
 }
