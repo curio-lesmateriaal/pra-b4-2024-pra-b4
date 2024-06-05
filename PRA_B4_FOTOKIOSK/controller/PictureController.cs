@@ -25,6 +25,9 @@ namespace PRA_B4_FOTOKIOSK.controller
 
             int day = (int)now.DayOfWeek;
 
+
+            
+
             var lowerBound = now.AddMinutes(-30); // 30 minuten geleden
             var upperBound = now.AddMinutes(-2); // 2 minuten geleden
 
@@ -55,20 +58,26 @@ namespace PRA_B4_FOTOKIOSK.controller
 
 
                                 // Controleer of de file tijd binnen de grenswaarden ligt
-                                PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
-                                
-                                /*
-                                 * Mert dit werk niet man
-                                 * 
-                                // Controleer of de file naam het juiste formaat heeft
-                                // Maak een DateTime object van de file tijd
-                                DateTime fileTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, second);
-                                if (parts.Length >= 4 && int.TryParse(parts[1], out int hour) &&
-                                    int.TryParse(parts[2], out int minute) && int.TryParse(parts[3], out int second))
-                                {
+                                //PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
 
+
+
+
+                                // dit haalt de tijd van de bestandnaam
+                                var hour = int.Parse(parts[0]);
+                                var minute = int.Parse(parts[1]);
+                                var second = int.Parse(parts[2]);
+
+                                // Maak een DateTime object van de tijd
+                                var fileTime = new DateTime(now.Year, now.Month, now.Day, hour, minute, second);
+
+                                // Controleer of de file tijd binnen de grenswaarden ligt
+                                if (fileTime >= lowerBound && fileTime <= upperBound)
+                                {
+                                    PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
                                 }
-                                */
+
+
                             }
                         }
                     }
