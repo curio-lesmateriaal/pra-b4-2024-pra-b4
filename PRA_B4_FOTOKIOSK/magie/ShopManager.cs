@@ -14,7 +14,10 @@ namespace PRA_B4_FOTOKIOSK.magie
     public class ShopManager
     {
 
-        public static List<KioskProduct> Products = new List<KioskProduct>();    
+        public static List<KioskProduct> Products = new List<KioskProduct>();
+
+        public static List<OrderedProduct> OrderedProducts = new List<OrderedProduct>();
+
         public static Home Instance { get; set; }
 
         public static string GetShopPriceList(string text)

@@ -23,27 +23,43 @@ namespace PRA_B4_FOTOKIOSK.controller
             ShopManager.SetShopReceipt("Eindbedrag\n€");
 
             // Vul de productlijst met producten
-            ShopManager.Products.Add(new KioskProduct() { Name = "Foto 10x15" , Price = 2.55f });
-            ShopManager.Products.Add(new KioskProduct() { Name = "Foto 20x30" , Price = 4.59f });
-            ShopManager.Products.Add(new KioskProduct() { Name = "Mok met Foto" , Price = 9.95f });
-            ShopManager.Products.Add(new KioskProduct() { Name = "Sleutelhanger" , Price = 6.12f });
-            ShopManager.Products.Add(new KioskProduct() { Name = "T-Shirt" ,  Price = 11.99f });
+            ShopManager.Products.Add(new KioskProduct() { Name = "Foto 10x15", Price = 2.55f });
+            ShopManager.Products.Add(new KioskProduct() { Name = "Foto 20x30", Price = 4.59f });
+            ShopManager.Products.Add(new KioskProduct() { Name = "Mok met Foto", Price = 9.95f });
+            ShopManager.Products.Add(new KioskProduct() { Name = "Sleutelhanger", Price = 6.12f });
+            ShopManager.Products.Add(new KioskProduct() { Name = "T-Shirt", Price = 11.99f });
             // Update dropdown met producten
             ShopManager.UpdateDropDownProducts();
-                foreach (KioskProduct product in ShopManager.Products)
+            foreach (KioskProduct product in ShopManager.Products)
             {
-                ShopManager.AddShopPriceList(product.Name+" : "+product.Price+"\n");
+                ShopManager.AddShopPriceList(product.Name + " : " + product.Price + "\n");
             }
         }
 
         // Wordt uitgevoerd wanneer er op de Toevoegen knop is geklikt
         public void AddButtonClick()
         {
-            int? fotoId= ShopManager.GetFotoId();
+            int? fotoId = ShopManager.GetFotoId();
             int? amount = ShopManager.GetAmount();
             KioskProduct product = ShopManager.GetSelectedProduct();
 
-            ShopManager.SetShopReceipt("Eindbedrag\n€" + product.Price * amount);
+            ShopManager.OrderedProducts.Add(new OrderedProduct() { FotoID = fotoId, ProductName = product.Name, Amount = amount, TotalPrice = product.Price * (float)amount });
+
+            float totalPrice = 0;
+            foreach (OrderedProduct op in ShopManager.OrderedProducts)
+            {
+                totalPrice += op.TotalPrice;
+            }
+
+            ShopManager.SetShopReceipt("Eindbedrag\n€" + totalPrice.ToString() + "\n\n\n");
+
+            foreach (OrderedProduct orderedProduct in ShopManager.OrderedProducts)
+            {
+                ShopManager.AddShopReceipt("FotoNummer: " + orderedProduct.FotoID + "\n");
+                ShopManager.AddShopReceipt("Product Naam: " + orderedProduct.ProductName + "\n");
+                ShopManager.AddShopReceipt("Aantal: " + orderedProduct.Amount + "\n");
+                ShopManager.AddShopReceipt("totale bedrag: " + orderedProduct.TotalPrice + "\n\n");
+            }
 
 
         }
