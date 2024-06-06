@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace PRA_B4_FOTOKIOSK.controller
 {
@@ -26,7 +27,7 @@ namespace PRA_B4_FOTOKIOSK.controller
             int day = (int)now.DayOfWeek;
 
 
-            
+
 
             var lowerBound = now.AddMinutes(-30); // 30 minuten geleden
             var upperBound = now.AddMinutes(-2); // 2 minuten geleden
@@ -74,8 +75,14 @@ namespace PRA_B4_FOTOKIOSK.controller
                                 // Controleer of de file tijd binnen de grenswaarden ligt
                                 if (fileTime >= lowerBound && fileTime <= upperBound)
                                 {
-                                    PicturesToDisplay.Add(new KioskPhoto() { Id = 0, Source = file });
+                                    KioskPhoto photo = new KioskPhoto() { Id = 0, Source = file };
+
+                                    PicturesToDisplay.Add(photo);
+                                    AddPhotoIfWithinOneMinute(photo);
                                 }
+
+
+
 
 
                             }
@@ -92,6 +99,21 @@ namespace PRA_B4_FOTOKIOSK.controller
         public void RefreshButtonClick()
         {
 
+        }
+
+        public void AddPhotoIfWithinOneMinute(KioskPhoto newPhoto)
+        {
+            if (!PicturesToDisplay.Contains(newPhoto))
+            {
+                foreach (var existingPhoto in PicturesToDisplay)
+                {
+                    if (existingPhoto.Created.AddMinutes(1) == newPhoto.Created)
+                    {
+                        PicturesToDisplay.Add(newPhoto);
+                        break;
+                    }
+                }
+            }
         }
     }
 }
