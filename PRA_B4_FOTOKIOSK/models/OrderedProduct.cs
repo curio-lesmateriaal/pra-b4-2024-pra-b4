@@ -8,6 +8,7 @@ namespace PRA_B4_FOTOKIOSK.models
 {
     public class OrderedProduct
     {
+        //test PRO
         public int? FotoID {  get; set; }
         public string ProductName { get; set; }
         public int? Amount { get; set; }
