@@ -45,6 +45,8 @@ namespace PRA_B4_FOTOKIOSK.controller
 
             ShopManager.OrderedProducts.Add(new OrderedProduct() { FotoID = fotoId, ProductName = product.Name, Amount = amount, TotalPrice = product.Price * (float)amount });
 
+            // voor narek pro opdracht
+
             float totalPrice = 0;
             foreach (OrderedProduct op in ShopManager.OrderedProducts)
             {
