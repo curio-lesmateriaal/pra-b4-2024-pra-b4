@@ -62,9 +62,22 @@ namespace PRA_B4_FOTOKIOSK.controller
                 ShopManager.AddShopReceipt("Aantal: " + orderedProduct.Amount + "\n");
                 ShopManager.AddShopReceipt("totale bedrag: " + orderedProduct.TotalPrice + "\n\n");
             }
+            //Deze pad moet je zelf veranderen naar eigen directory! ANDERS WERKT DIE NIET!
+            using (StreamWriter writetext = new StreamWriter("F:\\laragon\\www\\pra-b4-2024-pra-b4\\PRA_B4_FOTOKIOSK\\models\\receipt.txt"))
+            {
+                foreach (OrderedProduct orderedProduct in ShopManager.OrderedProducts)
+                {
 
+                    writetext.WriteLine("Product Naam: " + orderedProduct.ProductName);
+                    writetext.WriteLine("Foto Nummer: " + orderedProduct.FotoID);
+                    writetext.WriteLine("Aantal: " + orderedProduct.Amount);
+                    writetext.WriteLine("totale bedrag: " + orderedProduct.TotalPrice + "\n\n");
+
+                }
+            }
 
         }
+
 
         // Wordt uitgevoerd wanneer er op de Resetten knop is geklikt
         public void ResetButtonClick()
