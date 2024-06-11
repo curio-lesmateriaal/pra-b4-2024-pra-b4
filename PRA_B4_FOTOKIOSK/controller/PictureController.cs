@@ -45,11 +45,12 @@ namespace PRA_B4_FOTOKIOSK.controller
                 {
                     if (int.TryParse(d.ToString(), out int fotoDay))
                     {
-                        System.Diagnostics.Debug.WriteLine("\n\n" + fotoDay + "\n\n");
+                        System.Diagnostics.Debug.WriteLine("\n\n" + fotoDay + day + "\n\n");
                         if (day == fotoDay)
                         {
                             foreach (string file in Directory.GetFiles(dir))
                             {
+                                System.Diagnostics.Debug.WriteLine(file);
                                 /**
                                  * file string is de file van de foto. Bijvoorbeeld:
                                  * \fotos\0_Zondag\10_05_30_id8824.jpg
@@ -80,11 +81,6 @@ namespace PRA_B4_FOTOKIOSK.controller
                                     PicturesToDisplay.Add(photo);
                                     AddPhotoIfWithinOneMinute(photo);
                                 }
-
-
-
-
-
                             }
                         }
                     }
