@@ -45,6 +45,9 @@ namespace PRA_B4_FOTOKIOSK.controller
                 {
                     if (int.TryParse(d.ToString(), out int fotoDay))
                     {
+                        string input = SearchManager.GetSearchInput();
+                        SearchManager.SetPicture(input);
+
                         System.Diagnostics.Debug.WriteLine("\n\n" + fotoDay + "\n\n");
                         if (day == fotoDay)
                         {
