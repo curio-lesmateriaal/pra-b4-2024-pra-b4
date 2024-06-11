@@ -20,7 +20,7 @@ namespace PRA_B4_FOTOKIOSK.controller
         // Start methode die wordt aangeroepen wanneer de zoek pagina opent.
         public void Start()
         {
-
+            SearchManager.Instance = Window;
         }
 
         // Wordt uitgevoerd wanneer er op de Zoeken knop is geklikt
@@ -35,7 +35,7 @@ namespace PRA_B4_FOTOKIOSK.controller
             }
 
             // Parse de input om dag en tijd te krijgen
-            string[] inputParts = searchInput.Split(' ');
+            string[] inputParts = searchInput.Split('-');
             if (inputParts.Length < 2)
             {
                 // Handle incorrect input format scenario
@@ -78,7 +78,7 @@ namespace PRA_B4_FOTOKIOSK.controller
                             {
                                 KioskPhoto photo = new KioskPhoto() { Id = 0, Source = file };
                                 PicturesToDisplay.Add(photo);
-                                SearchManager.SetPicture(file);
+                                SearchManager.SetPicture(dir);
                             }
                         }
                     }
