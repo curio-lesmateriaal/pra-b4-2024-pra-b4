@@ -27,63 +27,39 @@ namespace PRA_B4_FOTOKIOSK.controller
         public void SearchButtonClick()
         {
             // Verkrijg de zoekinput van de gebruiker
-            string searchInput = SearchManager.GetSearchInput();
-            if (string.IsNullOrEmpty(searchInput))
+            string found = "";
+
+            DateTime now = DateTime.Now;
+            int day = (int)now.DayOfWeek;
+
+            string dir = "";
+            if (day == 0) dir = "../../../fotos/0_Zondag";
+            else if (day == 1) dir = "../../../fotos/1_Maandag";
+            else if (day == 2) dir = "../../../fotos/2_Dinsdag";
+            else if (day == 3) dir = "../../../fotos/3_Woensdag";
+            else if (day == 4) dir = "../../../fotos/4_Donderdag";
+            else if (day == 5) dir = "../../../fotos/5_Vrijdag";
+            else if (day == 6) dir = "../../../fotos/6_Zaterdag";
+
+            // loopt door de dag van 'fotos'
+            foreach (string photo in Directory.GetFiles(dir))
             {
-                // Handle empty input scenario
-                return;
-            }
+                string[] search = SearchManager.GetSearchInput().Split("-");
 
-            // Parse de input om dag en tijd te krijgen
-            string[] inputParts = searchInput.Split('-');
-            if (inputParts.Length < 2)
-            {
-                // Handle incorrect input format scenario
-                return;
-            }
+                int hour = int.Parse(search[0]);
+                int minute = int.Parse(search[1]);
+                int second = int.Parse(search[2]);
 
-            if (!int.TryParse(inputParts[0], out int day) || !DateTime.TryParse(inputParts[1], out DateTime searchTime))
-            {
-                // Handle invalid input scenario
-                return;
-            }
-
-            // Definieer de grenswaarden voor de zoekperiode
-            DateTime lowerBound = searchTime.AddMinutes(-1);
-            DateTime upperBound = searchTime.AddMinutes(1);
-
-            // Pad naar de fotos map
-            string photosPath = Path.Combine(Directory.GetCurrentDirectory(), "fotos");
-
-            // Loop door de dagenmappen
-            foreach (string dir in Directory.GetDirectories(photosPath))
-            {
-                string dayFolder = Path.GetFileName(dir);
-                if (int.TryParse(dayFolder.Split('_')[0], out int fotoDay) && day == fotoDay)
+                // om de datum te formaten
+                string timeDate = string.Format("{0:D2}_{1:D2}_{2:D2}_", hour, minute, second);
+                if (photo.Contains(timeDate))
                 {
-                    // Loop door de bestanden in de map
-                    foreach (string file in Directory.GetFiles(dir))
-                    {
-                        var fileName = Path.GetFileNameWithoutExtension(file);
-                        var parts = fileName.Split('_');
-
-                        // Controleer of de bestandnaam het juiste formaat heeft
-                        if (parts.Length >= 3 && int.TryParse(parts[0], out int hour) && int.TryParse(parts[1], out int minute) && int.TryParse(parts[2], out int second))
-                        {
-                            // Maak een DateTime object van de tijd
-                            var fileTime = new DateTime(searchTime.Year, searchTime.Month, searchTime.Day, hour, minute, second);
-
-                            // Controleer of de file tijd binnen de grenswaarden ligt
-                            if (fileTime >= lowerBound && fileTime <= upperBound)
-                            {
-                                KioskPhoto photo = new KioskPhoto() { Id = 0, Source = file };
-                                PicturesToDisplay.Add(photo);
-                                SearchManager.SetPicture(dir);
-                            }
-                        }
-                    }
+                    found = photo;
+                    SearchManager.SetPicture(found);
                 }
             }
         }
+    }
+}
     }
 }
